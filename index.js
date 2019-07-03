@@ -4,6 +4,8 @@ const MongoClient = require("mongodb").MongoClient;
 const ObjectID = require("mongodb").ObjectID;
 const app = express();
 
+const PORT = process.env.PORT || 3000;
+
 const CONNECTION_URL = "mongodb+srv://SistDist:SistDist@clustersistemasdistribuidos-f3top.mongodb.net/test?retryWrites=true&w=majority";
 const DATABASE_NAME = "SistemasDistribuidos";
 
@@ -72,7 +74,7 @@ app.post("/", function(req, res) {
 	}
 	res.send(respuesta);
 });
-app.listen(3000, () => {
+app.listen(PORT, () => {
 	MongoClient.connect(CONNECTION_URL, {useNewUrlParse: true}, (error, client) => {
 		if (error) {
 			throw error;
