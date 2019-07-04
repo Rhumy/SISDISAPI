@@ -36,8 +36,8 @@
 		// Configurar cabeceras y cors
 
 		app.get("/", function(req, res) {
-			var juegoABuscar = req.params.juego;
-			console.log('Juego: '+req.params.juego);
+			var juegoABuscar = req.query.juego;
+			console.log('Juego: '+juegoABuscar);
 			if(juegoABuscar != undefined){
 				collection.find({"juego": juegoABuscar}).sort({puntaje: -1}).toArray((error, result) => 
 				{
