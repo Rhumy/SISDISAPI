@@ -36,8 +36,8 @@
 		// Configurar cabeceras y cors
 
 		app.get("/", function(req, res) {
-			var juegoABuscar = req.body.juego;
-			console.log('Juego: '+req.body.juego);
+			var juegoABuscar = req.params.juego;
+			console.log('Juego: '+req.params.juego);
 			if(juegoABuscar != undefined){
 				collection.find({"juego": juegoABuscar}).sort({puntaje: -1}).toArray((error, result) => 
 				{
@@ -51,11 +51,13 @@
 						res.send(respuesta);
 					}
 					else{
+						console.log('Se envió la lista del juego '+juegoABuscar+'.')
 						res.send(result);
 					}
 				})
 			}
 			else{
+
 				collection.find({}).sort({puntaje: -1}).toArray((error, result) => 
 				{
 					if(error) {
@@ -68,6 +70,7 @@
 						res.send(respuesta);
 					}
 					else{
+						console.log('Se envió toda la lista.')
 						res.send(result);
 					}
 				})
