@@ -27,8 +27,9 @@ let respuesta = {
 }
 app.get("/", function(req, res) {
 	var juegoABuscar = req.query.juego;
+
 	console.log('Juego: '+req.query.juego);
-	collection.find({"juego": juegoABuscar}).toArray((error, result) => {
+	collection.find({"juego": juegoABuscar}).sort({puntaje: -1}).toArray((error, result) => {
 		if(error) {
 			respuesta = {
 				error: true,
