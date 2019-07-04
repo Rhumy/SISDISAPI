@@ -11,6 +11,13 @@ const DATABASE_NAME = "SistemasDistribuidos";
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+// Configurar cabeceras y cors
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods","GET,PUT,POST,DELETE")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 var database, collection;
 
@@ -26,6 +33,8 @@ let respuesta = {
 	codigo: 200,
 	mensaje: ''
 }
+// Configurar cabeceras y cors
+
 app.get("/", function(req, res) {
 	var juegoABuscar = req.body.juego;
 
