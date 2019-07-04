@@ -26,9 +26,9 @@ let respuesta = {
 	mensaje: ''
 }
 app.get("/", function(req, res) {
-	var juegoABuscar = req.query.juego;
+	var juegoABuscar = req.body.juego;
 
-	console.log('Juego: '+req.query.juego);
+	console.log('Juego: '+req.body.juego);
 	collection.find({"juego": juegoABuscar}).sort({puntaje: -1}).toArray((error, result) => {
 		if(error) {
 			respuesta = {
@@ -42,10 +42,10 @@ app.get("/", function(req, res) {
 	})
 });
 app.post("/", function(req, res) {
-	mensaje.nickname = req.query.nickname;
-	mensaje.puntaje = req.query.puntaje;
-	mensaje.juego = req.query.juego;
-	console.log('Nickname: '+req.query.nickname+'. Puntaje: '+req.query.puntaje+'. Juego: '+req.query.juego);
+	mensaje.nickname = req.body.nickname;
+	mensaje.puntaje = req.body.puntaje;
+	mensaje.juego = req.body.juego;
+	console.log('Nickname: '+req.body.nickname+'. Puntaje: '+req.body.puntaje+'. Juego: '+req.body.juego);
 	if( mensaje.nickname !=undefined && mensaje.puntaje!=undefined && mensaje.juego!=undefined){
 		//Enviar a MongoDB
 		collection.insertOne(mensaje, (error, result) => {
