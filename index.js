@@ -27,6 +27,7 @@ let respuesta = {
 }
 app.get("/", function(req, res) {
 	var juegoABuscar = req.query.juego;
+	console.log('Juego: '+req.query.juego);
 	collection.find({"juego": juegoABuscar}).toArray((error, result) => {
 		if(error) {
 			respuesta = {
@@ -43,10 +44,10 @@ app.post("/", function(req, res) {
 	mensaje.nickname = req.query.nickname;
 	mensaje.puntaje = req.query.puntaje;
 	mensaje.juego = req.query.juego;
+	console.log('Nickname: '+req.query.nickname+'. Puntaje: '+req.query.puntaje+'. Juego: '+req.query.juego);
 	if( mensaje.nickname !=undefined && mensaje.puntaje!=undefined && mensaje.juego!=undefined){
 		//Enviar a MongoDB
-		console.log('Apunto de insertar datos');
-		collection.insert(mensaje, (error, result) => {
+		collection.insertOne(mensaje, (error, result) => {
 			if(error) {
 				respuesta = {
 					error: true,
@@ -55,7 +56,6 @@ app.post("/", function(req, res) {
 				};
 			}
 		})
-		console.log('Despues de insertar datos');
 		if(respuesta.error == false){
 			respuesta = {
 				error: false,
