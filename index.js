@@ -37,7 +37,7 @@
 
 		app.get("/", function(req, res) {
 			var juegoABuscar = req.query.juego;
-			console.log('Juego: '+juegoABuscar);
+			console.log('query.juego: '+req.query.juego+'. params.juego: '+req.params.juego+'. body.juego: '+req.body.juego);
 			if(juegoABuscar != undefined){
 				collection.find({"juego": juegoABuscar}).sort({puntaje: -1}).toArray((error, result) => 
 				{
