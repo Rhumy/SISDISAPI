@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 var database, collection;
 
 let mensaje = {
+	_id: null,
 	nickname : '',
 	puntaje : '',
 	juego : ''
@@ -34,11 +35,14 @@ app.get("/", function(req, res) {
 			respuesta = {
 				error: true,
 				codigo: 500,
-				mensaje: 'Problema al obtener de la base de datos',
+				mensaje: 'Problema al obtener de la base de datos'
 			};
+			console.log(error);
 			res.send(respuesta);
 		}
-		res.send(result);
+		else{
+			res.send(result);
+		}
 	})
 });
 app.post("/", function(req, res) {
@@ -49,22 +53,24 @@ app.post("/", function(req, res) {
 	if( mensaje.nickname !=undefined && mensaje.puntaje!=undefined && mensaje.juego!=undefined){
 		//Enviar a MongoDB
 		collection.insertOne(mensaje, (error, result) => {
+			mensaje._id = null;
 			if(error) {
 				respuesta = {
 					error: true,
 					codigo: 500,
 					mensaje: 'Problema al insertar en la base de datos'
 				};
+				console.log(error);
+			}
+			else{
+				respuesta = {
+					error: false,
+					codigo: 200,
+					mensaje: 'Mensaje guardado',
+					respuesta: mensaje
+				};	
 			}
 		})
-		if(respuesta.error == false){
-			respuesta = {
-				error: false,
-				codigo: 200,
-				mensaje: 'Mensaje guardado',
-				respuesta: mensaje
-			};	
-		}
 	}
 	else{
 		respuesta = {
